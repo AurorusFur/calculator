@@ -1,46 +1,182 @@
-<!DOCTYPE HTML>
-<html lang="pl">
-<html>
- <head>
-     <meta charset="utf-8"/>
-     <link rel="stylesheet" href="style.css">
-     <title>kalkulator</title>
- </head>
- <body>
-     <main>
-     <table>
-        <tr>
-        <td>Wynik:</td>
-        <td colspan="2"></td>
-        <td>/</td>
+<DOCTYPE html!>
+	<html>
+	<head>
+		<meta charset="UTF-8"/>
+		<style>
+		    td {
+		    	height:100px;
+		    	width:100px;
+		    	border: 1px solid black;
+		    	text-align: center;
+		    }
+		    table {
+		    	font-size:32px;
+		    	border: 3px solid black;
+		    }
+		    td:hover {
+		    	background-color: red;
+		    	color:white;
+		    }
+			table tr:first-child td:not(:last-child):hover{
+				background-color:white;
+				color:black;
+			}
+		    main{
+		    	display:flex;
+		    	justify-content:center;
 
-        </tr>         
-         <tr>
-            <td>1</td>
-            <td>2</td>
-            <td>3</td>
-            <td>*</td>
-         </tr>
-
-         <tr>
-             <td>4</td>
-             <td>5</td>
-             <td>6</td>
-             <td>-</td>
-         </tr> 
-
-         <tr>
-            <td>7</td> 
-            <td>8</td> 
-            <td>9</td>
-            <td>+</td>
-        </tr>             
-
-        <tr>
-            <td colspan="3px">0</td> 
-            <td>=</td>
-        </tr>                     
-    </table>
+		    }
+		    body{
+		    	margin:0px;
+		    }
+	    </style>
+	</head>
+    <body>
+    	<main>
+    	   <table>
+    		<tr>
+    			<td class="without" >Wynik:</td>
+    			<td id="wynik" class="without" colspan="2"></td>
+    			<td>/</td>
+    		</tr>
+    		<tr>
+    			<td><span id="span">1</span></td>
+    			<td>2</td>
+    			<td>3</td>
+    			<td>*</td>
+    		</tr>
+    		<tr>
+    			<td>4</td>
+    			<td>5</td>
+    			<td>6</td>
+    			<td>-</td>
+    		</tr>
+    		<tr>
+    			<td>7</td>
+    			<td>8</td>
+    			<td>9</td>
+    			<td>+</td>
+    		</tr>
+    		<tr>
+    			<td colspan="3">0</td>
+    			<td>=</td>
+    		</tr>
+    	</table>
     </main>
- </body>
-</html>
+    <script>
+		var rodzaj = 0;
+		var holder = '';
+		var array = [];
+		var zmienna = document.getElementsByTagName("td");
+		console.log(document.getElementsByTagName("td"));
+		for(var i = 0; i < zmienna.length; i++){
+				zmienna[i].addEventListener('click', function() {
+				var parse = parseInt(this.innerText);
+						if(!isNaN(parse)){
+							document.getElementById("wynik").innerHTML += parse;
+							holder += parse;
+						} else {
+							array.push(holder);
+							holder = '';
+							document.getElementById("wynik").innerHTML += " " + this.innerText + " ";
+
+							if ( this.innerText === '+' ) {
+								if (rodzaj == 0) {
+									rodzaj = 1;
+									console.log("rodzaj" + rodzaj);
+								}
+							}
+
+							if ( this.innerText === '-' ) {
+								if (rodzaj == 0) {
+									rodzaj = 2;
+									console.log("rodzaj" + rodzaj);
+								}
+							}
+
+							if ( this.innerText === '/' ) {
+								if (rodzaj == 0) {
+									rodzaj = 3;
+									console.log("rodzaj" + rodzaj);
+								}
+							}
+
+							if ( this.innerText === '*' ) {
+								if (rodzaj == 0) {
+									rodzaj = 4;
+									console.log("rodzaj" + rodzaj);
+								}
+							}
+
+							if ( this.innerText === '=' ) {
+								switch (rodzaj) {
+									case 1:
+										wynik();
+										break;
+									case 2:
+										wynikod();
+										break;
+									case 3:
+										wynikdziel();
+										break;
+									case 4:
+										wynikmno();
+										break;
+									default:
+									console.log("error");
+
+								}
+
+							}
+						}
+
+				});
+
+
+				var dodawanie = 0;
+				function wynik(){
+				console.log(array);
+					for(var i = 0; i < array.length; i++){
+						dodawanie += parseInt(array[i]);
+					}
+					document.getElementById("wynik").innerHTML = dodawanie;
+				}
+
+			var odejmowanie = 0;
+			function wynikod(){
+			console.log(array);
+			odejmowanie += parseInt(array[0]);
+				for(var i = 0; i < array.length-1; i++){
+					odejmowanie += parseInt(-array[i+1]);
+					console.log(array[i+1]);
+				}
+				document.getElementById("wynik").innerHTML = odejmowanie;
+			}
+
+			var dzielenie = 0;
+			function wynikdziel(){
+			console.log(array);
+			dzielenie += parseInt(array[0]);
+				for(var i = 0; i < array.length-1; i++){
+					dzielenie /= parseInt(array[i+1]);
+					console.log(array[0]);
+					console.log(array[i+1]);
+				}
+				document.getElementById("wynik").innerHTML = dzielenie;
+			}
+
+			var mnozenie = 0;
+			function wynikmno(){
+			console.log(array);
+			mnozenie += parseInt(array[0]);
+				for(var i = 0; i < array.length-1; i++){
+					mnozenie *= parseInt(array[i+1]);
+					console.log(array[i+1]);
+				}
+				document.getElementById("wynik").innerHTML = mnozenie;
+				console.log("mno");
+		}
+	}
+    </script>
+    </body>
+	</html>
